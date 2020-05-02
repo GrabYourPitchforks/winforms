@@ -149,11 +149,9 @@ namespace System.Windows.Forms
         /// </summary>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            if (value is string)
+            if (value is string text)
             {
-                string text = ((string)value).Trim();
-
-                if (text.Length == 0)
+                if (string.IsNullOrWhiteSpace(text))
                 {
                     return null;
                 }
@@ -161,11 +159,7 @@ namespace System.Windows.Forms
                 {
                     // Parse an array of key tokens.
                     //
-                    string[] tokens = text.Split(new char[] { '+' });
-                    for (int i = 0; i < tokens.Length; i++)
-                    {
-                        tokens[i] = tokens[i].Trim();
-                    }
+                    string[] tokens = text.Split('+', StringSplitOptions.TrimEntries);
 
                     // Now lookup each key token in our key hashtable.
                     //

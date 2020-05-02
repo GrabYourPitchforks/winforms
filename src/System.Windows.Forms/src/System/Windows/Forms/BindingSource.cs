@@ -991,10 +991,10 @@ namespace System.Windows.Forms
             ArrayList sorts = new ArrayList();
             PropertyDescriptorCollection props = _currencyManager.GetItemProperties();
 
-            string[] split = sortString.Split(new char[] { ',' });
+            string[] split = sortString.Split(',', StringSplitOptions.TrimEntries);
             for (int i = 0; i < split.Length; i++)
             {
-                string current = split[i].Trim();
+                string current = split[i];
 
                 // Handle ASC and DESC
                 int length = current.Length;

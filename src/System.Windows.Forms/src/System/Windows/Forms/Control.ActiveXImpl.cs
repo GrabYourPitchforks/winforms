@@ -1787,7 +1787,7 @@ namespace System.Windows.Forms
                 if (custom.Length > 0)
                 {
                     ComSourceInterfacesAttribute coms = (ComSourceInterfacesAttribute)custom[0];
-                    string eventName = coms.Value.Split(new char[] { '\0' })[0];
+                    string eventName = coms.Value.Split('\0')[0];
                     eventInterface = controlType.Module.Assembly.GetType(eventName, false);
                     if (eventInterface == null)
                     {

@@ -707,13 +707,13 @@ namespace System.Resources
                 resolvedType = typeResolver.GetType(typeName, false);
                 if (resolvedType == null)
                 {
-                    string[] typeParts = typeName.Split(',');
+                    string[] typeParts = typeName.Split(',', StringSplitOptions.TrimEntries);
 
                     // Break up the type name from the rest of the assembly strong name.
                     if (typeParts != null && typeParts.Length >= 2)
                     {
-                        string partialName = typeParts[0].Trim();
-                        string assemblyName = typeParts[1].Trim();
+                        string partialName = typeParts[0];
+                        string assemblyName = typeParts[1];
                         partialName = partialName + ", " + assemblyName;
                         resolvedType = typeResolver.GetType(partialName, false);
                     }
@@ -791,17 +791,17 @@ namespace System.Resources
             Type type = typeResolver.GetType(typeName);
             if (type == null)
             {
-                string[] typeParts = typeName.Split(',');
+                string[] typeParts = typeName.Split(',', StringSplitOptions.TrimEntries);
 
                 // Break up the assembly name from the rest of the assembly strong name.
                 // we try 1) FQN 2) FQN without a version 3) just the short name
                 if (typeParts != null && typeParts.Length > 2)
                 {
-                    string partialName = typeParts[0].Trim();
+                    string partialName = typeParts[0];
 
                     for (int i = 1; i < typeParts.Length; ++i)
                     {
-                        string typePart = typeParts[i].Trim();
+                        string typePart = typeParts[i];
                         if (!typePart.StartsWith("Version=") && !typePart.StartsWith("version="))
                         {
                             partialName = partialName + ", " + typePart;
@@ -810,7 +810,7 @@ namespace System.Resources
                     type = typeResolver.GetType(partialName);
                     if (type == null)
                     {
-                        type = typeResolver.GetType(typeParts[0].Trim());
+                        type = typeResolver.GetType(typeParts[0]);
                     }
                 }
             }
